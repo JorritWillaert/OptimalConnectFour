@@ -1,5 +1,8 @@
 from board import Board
 from random import randint
+import cpu
+
+from copy import deepcopy
 
 class Game():
     def __init__(self, player1, player2):
@@ -16,20 +19,13 @@ class Game():
         self.board.change_character(own.character, row, column)
 
     def make_cpu_move(self, own, opponent):
-        print("The CPU is doing a random move.")
-        while True:
-            column = randint(0, 6)
-            if column in self.board.get_free_columns():
-                break
-        row = self.board.check_row(column)
-        if row == 0:
-            self.board.remove_free_column(column)
-        self.board.change_character(own.character, row, column)
+        #copied_game = deepcopy(self)
+        cpu.cpu_min_max_algorithm(self, own, opponent)
 
     def draw_board(self):
         self.board.draw_board()
 
-    def victory(self, own, opponent):
+    def victory(self, own, opponent, printing = True):
         """Check for victory"""
         row = 5
         column = 0
@@ -45,7 +41,8 @@ class Game():
                 if row > 2:
                     vertical = self.victory_column_up(row, column)
                 if horizontal or diagonal_right or diagonal_left or vertical:
-                    self.print_victory(own)
+                    if printing:
+                        self.print_victory(own)
                     return True
                 column += 1
             column = 0
@@ -91,10 +88,11 @@ class Game():
                 return False
         return True
 
-    def draw(self):
+    def draw(self, printing = True):
         """Check for a draw (no more legal moves possible)"""
         if not self.board.get_free_columns():
-            print("The game ended in a draw!")
+            if printing:
+                print("The game ended in a draw!")
             return True
 
     def choose_move(self):
@@ -109,6 +107,17 @@ class Game():
                     return column
                 print("Illegal move!")
                 self.draw_board()
+
+    def cpu_random_move(self):
+        print("The CPU is doing a random move.")
+        while True:
+            column = randint(0, 6)
+            if column in self.board.get_free_columns():
+                break
+        row = self.board.check_row(column)
+        if row == 0:
+            self.board.remove_free_column(column)
+        self.board.change_character(own.character, row, column)
 
 
 def choose_gamemode():
