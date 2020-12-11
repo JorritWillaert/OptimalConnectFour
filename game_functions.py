@@ -7,7 +7,14 @@ class Game():
         self.board = Board()
 
     def make_human_move(self, own, opponent):
-        None
+        print(own.name + ", it is your turn. You are playing " + own.character)
+        column = choose_move()
+        row = self.board.check_row(column)
+        if row < 0:
+            print("Illegal move!")
+            self.draw_board()
+            self.make_human_move(own, opponent)
+        self.board.change_character(own.character, row, column)
 
     def make_cpu_move(self, own, opponent):
         None
@@ -22,6 +29,15 @@ class Game():
     def draw(self):
         """Check for a draw (no more legal moves possible)"""
         None
+
+def choose_move():
+    """Return a number between 0 and 6 (input - 1). Re-ask question if no legal move."""
+    while True:
+        move = input("Which column do you want to play? ").strip()
+        if move not in ['1', '2', '3', '4', '5', '6', '7']:
+            print("Invalid choice")
+        else:
+            return int(move) - 1
 
 def choose_gamemode():
     """Return True if the player wants to play against the computer"""

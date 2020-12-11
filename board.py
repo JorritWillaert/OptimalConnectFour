@@ -20,3 +20,14 @@ class Board():
             print()
         print("   =================    ")
         print()
+
+    def check_row(self, column):
+        row = 5
+        while self.board[row][column].get_character() != ".":
+            row -= 1
+            if row < 0:
+                return row
+        return row
+
+    def change_character(self, character, row, column):
+        self.board[row][column].set_character(character)

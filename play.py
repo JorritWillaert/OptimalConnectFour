@@ -20,8 +20,8 @@ def play(player1, player2):
 def main():
     gf.print_rules()
     cpu = gf.choose_gamemode()
-    player1 = Player(False)
-    player2 = Player(cpu)
+    player1 = Player(False, 'X')
+    player2 = Player(cpu, 'O')
     play(player1, player2)
 
 if __name__ == "__main__":

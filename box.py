@@ -5,3 +5,6 @@ class Box():
 
     def get_character(self):
         return self.character
+
+    def set_character(self, character):
+        self.character = character
