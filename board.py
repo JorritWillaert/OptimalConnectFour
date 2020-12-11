@@ -37,3 +37,6 @@ class Board():
 
     def change_character(self, character, row, column):
         self.board[row][column].set_character(character)
+
+    def get_character(self, row, column):
+        return self.board[row][column].get_character()

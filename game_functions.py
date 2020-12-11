@@ -31,7 +31,65 @@ class Game():
 
     def victory(self, own, opponent):
         """Check for victory"""
-        None
+        row = 5
+        column = 0
+        while row >= 0:
+            while column < 7:
+                horizontal = diagonal_right = diagonal_left = vertical = False
+                if column < 4:
+                    horizontal = self.victory_row_right(row, column)
+                if column < 4 and row > 2:
+                    diagonal_right = self.victory_diagonal_right_up(row, column)
+                if column > 2 and row > 2:
+                    diagonal_left = self.victory_diagonal_left_up(row, column)
+                if row > 2:
+                    vertical = self.victory_column_up(row, column)
+                if horizontal or diagonal_right or diagonal_left or vertical:
+                    self.print_victory(own)
+                    return True
+                column += 1
+            column = 0
+            row -= 1
+
+    def print_victory(self, own):
+        self.board.draw_board()
+        print(own.name + ", congratulations! You've won!")
+
+    def victory_row_right(self, row, column):
+        running_char = self.board.get_character(row, column)
+        if running_char == '.':
+            return False
+        for i in range(1, 4):
+            if self.board.get_character(row, column + i) != running_char:
+                return False
+        return True
+
+    def victory_diagonal_right_up(self, row, column):
+        running_char = self.board.get_character(row, column)
+        if running_char == '.':
+            return False
+        for i in range(1, 4):
+            if self.board.get_character(row - i, column + i) != running_char:
+                return False
+        return True
+
+    def victory_diagonal_left_up(self, row, column):
+        running_char = self.board.get_character(row, column)
+        if running_char == '.':
+            return False
+        for i in range(1, 4):
+            if self.board.get_character(row - i, column - i) != running_char:
+                return False
+        return True
+
+    def victory_column_up(self, row, column):
+        running_char = self.board.get_character(row, column)
+        if running_char == '.':
+            return False
+        for i in range(1, 4):
+            if self.board.get_character(row - i, column) != running_char:
+                return False
+        return True
 
     def draw(self):
         """Check for a draw (no more legal moves possible)"""
@@ -61,6 +119,7 @@ def choose_gamemode():
             if cpu in ['y', 'yes']:
                 return True
             return False
+
 
 def print_rules():
     print(
