@@ -1,4 +1,5 @@
 from board import Board
+from random import randint
 
 class Game():
     def __init__(self, player1, player2):
@@ -15,7 +16,15 @@ class Game():
         self.board.change_character(own.character, row, column)
 
     def make_cpu_move(self, own, opponent):
-        None
+        print("The CPU is doing a random move.")
+        while True:
+            column = randint(0, 6)
+            if column in self.board.get_free_columns():
+                break
+        row = self.board.check_row(column)
+        if row == 0:
+            self.board.remove_free_column(column)
+        self.board.change_character(own.character, row, column)
 
     def draw_board(self):
         self.board.draw_board()
