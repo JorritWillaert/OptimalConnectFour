@@ -8,12 +8,10 @@ class Game():
 
     def make_human_move(self, own, opponent):
         print(own.name + ", it is your turn. You are playing " + own.character)
-        column = choose_move()
+        column = self.choose_move()
         row = self.board.check_row(column)
-        if row < 0:
-            print("Illegal move!")
-            self.draw_board()
-            self.make_human_move(own, opponent)
+        if row == 0:
+            self.board.remove_free_column(column)
         self.board.change_character(own.character, row, column)
 
     def make_cpu_move(self, own, opponent):
@@ -30,14 +28,19 @@ class Game():
         """Check for a draw (no more legal moves possible)"""
         None
 
-def choose_move():
-    """Return a number between 0 and 6 (input - 1). Re-ask question if no legal move."""
-    while True:
-        move = input("Which column do you want to play? ").strip()
-        if move not in ['1', '2', '3', '4', '5', '6', '7']:
-            print("Invalid choice")
-        else:
-            return int(move) - 1
+    def choose_move(self):
+        """Return a number between 0 and 6 (input - 1). Re-ask question if no legal move."""
+        while True:
+            move = input("Which column do you want to play? ").strip()
+            if move not in ['1', '2', '3', '4', '5', '6', '7']:
+                print("Invalid choice")
+            else:
+                column = int(move) - 1
+                if column in self.board.get_free_columns():
+                    return column
+                print("Illegal move!")
+                self.draw_board()
+
 
 def choose_gamemode():
     """Return True if the player wants to play against the computer"""
