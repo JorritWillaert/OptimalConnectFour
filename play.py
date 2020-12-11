@@ -1,7 +1,7 @@
 import game_functions as gf
 
 def main():
-    #print_rules()
+    gf.print_rules()
     gamemode = gf.choose_gamemode()
     #player1 = new Player(False)
     #player2 = new Player(gamemode)
