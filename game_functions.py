@@ -93,7 +93,9 @@ class Game():
 
     def draw(self):
         """Check for a draw (no more legal moves possible)"""
-        None
+        if not self.board.get_free_columns():
+            print("The game ended in a draw!")
+            return True
 
     def choose_move(self):
         """Return a number between 0 and 6 (input - 1). Re-ask question if no legal move."""
