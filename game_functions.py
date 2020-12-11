@@ -1,11 +1,30 @@
+class Game():
+    def __init__(self, player1, player2):
+        self.player1 = player1
+        self.player2 = player2
+
+    def make_human_move(self, own, opponent):
+        None
+
+    def make_cpu_move(self, own, opponent):
+        None
+
+    def victory(self, own, opponent):
+        """Check for victory"""
+        None
+
+    def draw(self):
+        """Check for a draw (no more legal moves possible)"""
+        None
+
 def choose_gamemode():
     """Return True if the player wants to play against the computer"""
     while True:
-        gamemode = input("Do you want to play against an optimal computer? (y/n) ").lower().strip()
-        if gamemode not in ['y', 'n', 'yes', 'no']:
+        cpu = input("Do you want to play against an optimal computer? (y/n) ").lower().strip()
+        if cpu not in ['y', 'n', 'yes', 'no']:
             print("Invalid choice")
         else:
-            if gamemode in ['y', 'yes']:
+            if cpu in ['y', 'yes']:
                 return True
             return False
 
