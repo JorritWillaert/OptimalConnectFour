@@ -13,8 +13,7 @@ class Game():
         None
 
     def draw_board(self):
-        #self.board.draw_board()
-        None
+        self.board.draw_board()
 
     def victory(self, own, opponent):
         """Check for victory"""
