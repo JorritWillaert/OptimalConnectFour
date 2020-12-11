@@ -1,12 +1,19 @@
+from board import Board
+
 class Game():
     def __init__(self, player1, player2):
         self.player1 = player1
         self.player2 = player2
+        self.board = Board()
 
     def make_human_move(self, own, opponent):
         None
 
     def make_cpu_move(self, own, opponent):
+        None
+
+    def draw_board(self):
+        #self.board.draw_board()
         None
 
     def victory(self, own, opponent):
