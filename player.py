@@ -14,5 +14,8 @@ class Player():
     def increase_laid_stones(self):
         self.laid_stones += 1
 
+    def decrease_laid_stones(self):
+        self.laid_stones -= 1
+
     def get_laid_stones(self):
         return self.laid_stones

@@ -8,7 +8,10 @@ class Game():
     def __init__(self, player1, player2):
         self.player1 = player1
         self.player2 = player2
-        self.board = Board()
+        self.size_horizontal = 4
+        self.size_vertical = 4
+        self.board = Board(self.size_horizontal, self.size_vertical)
+        self.array_strings = ['1', '2', '3', '4', '5', '6', '7']
 
     def make_human_move(self, own, opponent):
         print(own.name + ", it is your turn. You are playing " + own.character)
@@ -27,14 +30,14 @@ class Game():
 
     def victory(self, own, opponent, printing = True):
         """Check for victory"""
-        row = 5
+        row = self.size_vertical - 1
         column = 0
         while row >= 0:
-            while column < 7:
+            while column < self.size_horizontal:
                 horizontal = diagonal_right = diagonal_left = vertical = False
-                if column < 4:
+                if column < self.size_horizontal - 3:
                     horizontal = self.victory_row_right(row, column)
-                if column < 4 and row > 2:
+                if column < self.size_horizontal - 3 and row > 2:
                     diagonal_right = self.victory_diagonal_right_up(row, column)
                 if column > 2 and row > 2:
                     diagonal_left = self.victory_diagonal_left_up(row, column)
@@ -99,7 +102,7 @@ class Game():
         """Return a number between 0 and 6 (input - 1). Re-ask question if no legal move."""
         while True:
             move = input("Which column do you want to play? ").strip()
-            if move not in ['1', '2', '3', '4', '5', '6', '7']:
+            if move not in self.array_strings:
                 print("Invalid choice")
             else:
                 column = int(move) - 1

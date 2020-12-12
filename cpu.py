@@ -1,4 +1,3 @@
-# 22 - number of stones
 def calculate_utility(player):
     return 22 - player.get_laid_stones()
 
@@ -19,7 +18,13 @@ def max_value(game, own, opponent):
             game.board.remove_free_column(column)
         game.board.change_character(own.character, row, column)
         game.board.draw_board()
+        own.increase_laid_stones()
         value2, action2 = min_value(game, own, opponent)
+        #Restore (backtrack)
+        own.decrease_laid_stones()
+        game.board.change_character('.', row, column)
+        if row == 0:
+            game.board.add_free_column(column)
         if not action2:
             action2 = column
         if value2 > max_val:
@@ -39,7 +44,14 @@ def min_value(game, own, opponent):
         if row == 0:
             game.board.remove_free_column(column)
         game.board.change_character(opponent.character, row, column)
+        game.board.draw_board()
+        opponent.increase_laid_stones()
         value2, action2 = max_value(game, own, opponent)
+        #Restore (backtrack)
+        opponent.decrease_laid_stones()
+        game.board.change_character('.', row, column)
+        if row == 0:
+            game.board.add_free_column(column)
         if not action2:
             action2 = column
         if value2 < min_val:
