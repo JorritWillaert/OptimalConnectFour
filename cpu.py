@@ -3,7 +3,7 @@ def calculate_utility(player):
 
 def cpu_min_max_algorithm(game, own, opponent):
     value, move = max_value(game, own, opponent)
-    return move
+    return value, move
 
 def max_value(game, own, opponent):
     if game.victory(own, opponent, printing = False):

@@ -6,8 +6,8 @@ class Game():
     def __init__(self, player1, player2):
         self.player1 = player1
         self.player2 = player2
-        self.size_horizontal = 4
-        self.size_vertical = 4
+        self.size_horizontal = 7
+        self.size_vertical = 6
         self.in_a_row = 4
         self.board = Board(self.size_horizontal, self.size_vertical)
         self.array_strings = ['1', '2', '3', '4', '5', '6', '7']
@@ -21,11 +21,12 @@ class Game():
         self.board.change_character(own.character, row, column)
 
     def make_cpu_move(self, own, opponent):
-        column = cpu.cpu_min_max_algorithm(self, own, opponent)
+        value, column = cpu.cpu_min_max_algorithm(self, own, opponent)
         row = self.board.check_row(column)
         if row == 0:
             self.board.remove_free_column(column)
         self.board.change_character(own.character, row, column)
+        return value
 
     def draw_board(self):
         self.board.draw_board()
