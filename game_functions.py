@@ -23,7 +23,14 @@ class Game():
 
     def make_cpu_move(self, own, opponent):
         #copied_game = deepcopy(self)
-        cpu.cpu_min_max_algorithm(self, own, opponent)
+        if own.get_laid_stones() in [1, 2]:
+            self.make_human_move(own, opponent)
+        else:
+            column = cpu.cpu_min_max_algorithm(self, own, opponent)
+            row = self.board.check_row(column)
+            if row == 0:
+                self.board.remove_free_column(column)
+            self.board.change_character(own.character, row, column)
 
     def draw_board(self):
         self.board.draw_board()
