@@ -8,6 +8,7 @@ class Game():
         self.player2 = player2
         self.size_horizontal = 4
         self.size_vertical = 4
+        self.in_a_row = 4
         self.board = Board(self.size_horizontal, self.size_vertical)
         self.array_strings = ['1', '2', '3', '4', '5', '6', '7']
 
@@ -36,13 +37,13 @@ class Game():
         while row >= 0:
             while column < self.size_horizontal:
                 horizontal = diagonal_right = diagonal_left = vertical = False
-                if column < self.size_horizontal - 3:
+                if column < self.size_horizontal - (self.in_a_row - 1):
                     horizontal = self.victory_row_right(row, column)
-                if column < self.size_horizontal - 3 and row > 2:
+                if column < self.size_horizontal - (self.in_a_row - 1) and row > self.in_a_row - 2:
                     diagonal_right = self.victory_diagonal_right_up(row, column)
-                if column > 2 and row > 2:
+                if column > self.in_a_row - 2 and row > self.in_a_row - 2:
                     diagonal_left = self.victory_diagonal_left_up(row, column)
-                if row > 2:
+                if row > self.in_a_row - 2:
                     vertical = self.victory_column_up(row, column)
                 if horizontal or diagonal_right or diagonal_left or vertical:
                     if printing:
@@ -60,7 +61,7 @@ class Game():
         running_char = self.board.get_character(row, column)
         if running_char == '.':
             return False
-        for i in range(1, 4):
+        for i in range(1, self.in_a_row):
             if self.board.get_character(row, column + i) != running_char:
                 return False
         return True
@@ -69,7 +70,7 @@ class Game():
         running_char = self.board.get_character(row, column)
         if running_char == '.':
             return False
-        for i in range(1, 4):
+        for i in range(1, self.in_a_row):
             if self.board.get_character(row - i, column + i) != running_char:
                 return False
         return True
@@ -78,7 +79,7 @@ class Game():
         running_char = self.board.get_character(row, column)
         if running_char == '.':
             return False
-        for i in range(1, 4):
+        for i in range(1, self.in_a_row):
             if self.board.get_character(row - i, column - i) != running_char:
                 return False
         return True
@@ -87,7 +88,7 @@ class Game():
         running_char = self.board.get_character(row, column)
         if running_char == '.':
             return False
-        for i in range(1, 4):
+        for i in range(1, self.in_a_row):
             if self.board.get_character(row - i, column) != running_char:
                 return False
         return True
