@@ -20,6 +20,7 @@ def play(player1, player2, array):
                 value = game.make_cpu_move(own, opponent)
                 game.draw_board()
                 print(value)
+                print("stones", own.get_laid_stones())
                 return value
                 #if not own.cpu:
                 #    game.make_human_move(own, opponent)
@@ -31,11 +32,11 @@ def play(player1, player2, array):
 def main():
     gf.print_rules()
     cpu = gf.choose_gamemode()
-    player1 = Player(False, 'X')
-    player2 = Player(cpu, 'O')
     with open("testset.txt") as f:
         lines = f.readlines()
         for line in lines:
+            player1 = Player(cpu, 'X')
+            player2 = Player(cpu, 'O')
             master_array = line.split()
             array = [int(char) for char in master_array[0]]
             value = play(player1, player2, array)
