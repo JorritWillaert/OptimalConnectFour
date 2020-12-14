@@ -2,8 +2,6 @@ from board import Board
 from random import randint
 import cpu
 
-from copy import deepcopy
-
 class Game():
     def __init__(self, player1, player2):
         self.player1 = player1
@@ -22,15 +20,11 @@ class Game():
         self.board.change_character(own.character, row, column)
 
     def make_cpu_move(self, own, opponent):
-        #copied_game = deepcopy(self)
-        if own.get_laid_stones() in [1, 2]:
-            self.make_human_move(own, opponent)
-        else:
-            column = cpu.cpu_min_max_algorithm(self, own, opponent)
-            row = self.board.check_row(column)
-            if row == 0:
-                self.board.remove_free_column(column)
-            self.board.change_character(own.character, row, column)
+        column = cpu.cpu_min_max_algorithm(self, own, opponent)
+        row = self.board.check_row(column)
+        if row == 0:
+            self.board.remove_free_column(column)
+        self.board.change_character(own.character, row, column)
 
     def draw_board(self):
         self.board.draw_board()

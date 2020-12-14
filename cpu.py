@@ -19,27 +19,16 @@ def max_value(game, own, opponent):
         if row == 0:
             game.board.remove_free_column(column)
         game.board.change_character(own.character, row, column)
-        if own.get_laid_stones() == 1:
-            print("own First: ", column, row)
-            game.board.draw_board()
-        if own.get_laid_stones() == 2:
-            print("own Two: ", column, row)
-            game.board.draw_board()
-        if own.get_laid_stones() == 3:
-            print("own Three: ", column, row)
         own.increase_laid_stones()
-        game.board.draw_board()
         value2, action2 = min_value(game, opponent, own)
         #Restore (backtrack)
         own.decrease_laid_stones()
         game.board.change_character('.', row, column)
-        if not action2:
-            action2 = column
         if row == 0:
             game.board.add_free_column(column)
         if value2 > max_val:
             max_val = value2
-            move = action2
+            move = column
     return max_val, move
 
 def min_value(game, own, opponent):
@@ -56,23 +45,14 @@ def min_value(game, own, opponent):
         if row == 0:
             game.board.remove_free_column(column)
         game.board.change_character(own.character, row, column)
-        if own.get_laid_stones() == 1:
-            print("opponent First: ", column, row)
-            game.board.draw_board()
-        if own.get_laid_stones() == 2:
-            print("opponent Two: ", column, row)
-            game.board.draw_board()
-        game.board.draw_board()
         own.increase_laid_stones()
         value2, action2 = max_value(game, opponent, own)
         #Restore (backtrack)
         own.decrease_laid_stones()
         game.board.change_character('.', row, column)
-        if not action2:
-            action2 = column
         if row == 0:
             game.board.add_free_column(column)
         if value2 < min_val:
             min_val = value2
-            move = action2
+            move = column
     return min_val, move
