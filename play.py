@@ -9,12 +9,12 @@ def play(player1, player2):
     game = Game(player1, player2)
     while True:
         for own, opponent in permutations(players):
-            own.increase_laid_stones()
             game.draw_board()
             if not own.cpu:
                 game.make_human_move(own, opponent)
             else:
                 game.make_cpu_move(own, opponent)
+            own.increase_laid_stones()
             if game.victory(own, opponent) or game.draw():
                 return
 
