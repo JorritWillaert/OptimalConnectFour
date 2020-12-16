@@ -125,6 +125,11 @@ class Game():
             self.board.remove_free_column(column)
         self.board.change_character(own.character, row, column)
 
+def heuristic_ordering(size_horizontal):
+    heuristic = [None] * size_horizontal
+    for i in range(size_horizontal):
+        heuristic[i] = size_horizontal // 2 + (1 - 2 * (i % 2)) * (i + 1) // 2
+    return heuristic
 
 def choose_gamemode():
     """Return True if the player wants to play against the computer"""

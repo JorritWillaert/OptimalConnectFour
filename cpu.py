@@ -1,18 +1,21 @@
+import game_functions as gf
+
 def calculate_utility(player):
     return 22 - player.get_laid_stones()
 
 def cpu_min_max_algorithm(game, own, opponent):
-    value, move = max_value(game, own, opponent, float("-inf"), float("inf"))
+    heuristic_ordering = gf.heuristic_ordering(game.size_horizontal)
+    value, move = max_value(game, own, opponent, float("-inf"), float("inf"), heuristic_ordering)
     return value, move
 
-def max_value(game, own, opponent, alpha, beta):
+def max_value(game, own, opponent, alpha, beta, heuristic_ordering):
     if game.victory(own, opponent, printing = False):
         utility = - calculate_utility(opponent)
         return (utility, None)
     if game.draw(printing = False):
         return (0, None)
     max_val = float("-inf")
-    for column in range(game.size_horizontal):
+    for column in heuristic_ordering:
         if column not in game.board.get_free_columns():
             continue
         row = game.board.check_row(column)
@@ -20,7 +23,7 @@ def max_value(game, own, opponent, alpha, beta):
             game.board.remove_free_column(column)
         game.board.change_character(own.character, row, column)
         own.increase_laid_stones()
-        value2, action2 = min_value(game, opponent, own, alpha, beta)
+        value2, action2 = min_value(game, opponent, own, alpha, beta, heuristic_ordering)
         #Restore (backtrack)
         own.decrease_laid_stones()
         game.board.change_character('.', row, column)
@@ -34,14 +37,14 @@ def max_value(game, own, opponent, alpha, beta):
             return max_val, move
     return max_val, move
 
-def min_value(game, own, opponent, alpha, beta):
+def min_value(game, own, opponent, alpha, beta, heuristic_ordering):
     if game.victory(own, opponent, printing = False):
         utility = calculate_utility(opponent)
         return (utility, None)
     if game.draw(printing = False):
         return (0, None)
     min_val = float("inf")
-    for column in range(game.size_horizontal):
+    for column in gf.heuristic_ordering(game.size_horizontal):
         if column not in game.board.get_free_columns():
             continue
         row = game.board.check_row(column)
@@ -49,7 +52,7 @@ def min_value(game, own, opponent, alpha, beta):
             game.board.remove_free_column(column)
         game.board.change_character(own.character, row, column)
         own.increase_laid_stones()
-        value2, action2 = max_value(game, opponent, own, alpha, beta)
+        value2, action2 = max_value(game, opponent, own, alpha, beta, heuristic_ordering)
         #Restore (backtrack)
         own.decrease_laid_stones()
         game.board.change_character('.', row, column)
