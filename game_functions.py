@@ -21,7 +21,8 @@ class Game():
         self.board.change_character(own.character, row, column)
 
     def make_cpu_move(self, own, opponent):
-        value, column = cpu.cpu_min_max_algorithm(self, own, opponent)
+        value, column, count = cpu.cpu_min_max_algorithm(self, own, opponent)
+        print("Number of states checked:", count)
         row = self.board.check_row(column)
         if row == 0:
             self.board.remove_free_column(column)

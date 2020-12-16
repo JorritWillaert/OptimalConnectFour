@@ -1,9 +1,9 @@
 def calculate_utility(player):
     return 22 - player.get_laid_stones()
-
+count = 0
 def cpu_min_max_algorithm(game, own, opponent):
     value, move = max_value(game, own, opponent)
-    return value, move
+    return value, move, count
 
 def max_value(game, own, opponent):
     if game.victory(own, opponent, printing = False):
@@ -11,6 +11,8 @@ def max_value(game, own, opponent):
         return (utility, None)
     if game.draw(printing = False):
         return (0, None)
+    global count
+    count += 1
     max_val = float("-inf")
     for column in range(game.size_horizontal):
         if column not in game.board.get_free_columns():
@@ -37,6 +39,8 @@ def min_value(game, own, opponent):
         return (utility, None)
     if game.draw(printing = False):
         return (0, None)
+    global count
+    count += 1
     min_val = float("inf")
     for column in range(game.size_horizontal):
         if column not in game.board.get_free_columns():
