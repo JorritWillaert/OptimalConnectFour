@@ -40,23 +40,32 @@ class Game():
                 horizontal = diagonal_right = diagonal_left = vertical = False
                 if column < self.size_horizontal - (self.in_a_row - 1):
                     horizontal = self.victory_row_right(row, column)
+                    if horizontal:
+                        self.print_victory(own, printing)
+                        return True
                 if column < self.size_horizontal - (self.in_a_row - 1) and row > self.in_a_row - 2:
                     diagonal_right = self.victory_diagonal_right_up(row, column)
+                    if diagonal_right:
+                        self.print_victory(own, printing)
+                        return True
                 if column > self.in_a_row - 2 and row > self.in_a_row - 2:
                     diagonal_left = self.victory_diagonal_left_up(row, column)
+                    if diagonal_left:
+                        self.print_victory(own, printing)
+                        return True
                 if row > self.in_a_row - 2:
                     vertical = self.victory_column_up(row, column)
-                if horizontal or diagonal_right or diagonal_left or vertical:
-                    if printing:
-                        self.print_victory(own)
-                    return True
+                    if vertical:
+                        self.print_victory(own, printing)
+                        return True
                 column += 1
             column = 0
             row -= 1
 
-    def print_victory(self, own):
-        self.board.draw_board()
-        print(own.name + ", congratulations! You've won!")
+    def print_victory(self, own, printing):
+        if printing:
+            self.board.draw_board()
+            print(own.name + ", congratulations! You've won!")
 
     def victory_row_right(self, row, column):
         running_char = self.board.get_character(row, column)
