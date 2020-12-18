@@ -1,7 +1,7 @@
 OptimalConnectFour
 ====================
 
-Play Connect Four with a friend or against an optimal AI.
+Play Connect Four with a friend or against an optimal AI.\
 Sidenote: You will never be able to win from a superintelligent AI...
 
 ### Usage
