@@ -165,7 +165,7 @@ def choose_size():
                 else:
                     horizontal = sizes[0]
                     vertical = sizes[1]
-                    if horizontal.isdigit() and vertical.isdigit():
+                    if horizontal.isdigit() and vertical.isdigit() and int(horizontal) >= 4 and int(vertical) >= 4:
                         return int(horizontal), int(vertical)
                     else:
                         print("Invalid choice")
