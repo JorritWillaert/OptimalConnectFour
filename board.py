@@ -21,7 +21,7 @@ class Board():
                 print(self.board[row][column].get_character(), end="")
                 print("|", end = "")
             print()
-        print("   =================    ")
+        print("   ==" + self.size_horizontal * 2 * "=" + "=    ")
         print()
 
     def get_free_columns(self):

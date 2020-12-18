@@ -3,11 +3,11 @@ from random import randint
 import cpu
 
 class Game():
-    def __init__(self, player1, player2):
+    def __init__(self, player1, player2, size_horizontal, size_vertical):
         self.player1 = player1
         self.player2 = player2
-        self.size_horizontal = 4
-        self.size_vertical = 4
+        self.size_horizontal = size_horizontal
+        self.size_vertical = size_vertical
         self.in_a_row = 4
         self.board = Board(self.size_horizontal, self.size_vertical)
         self.array_strings = ['1', '2', '3', '4', '5', '6', '7']
@@ -150,6 +150,27 @@ def choose_gamemode():
             if cpu in ['y', 'yes']:
                 return True
             return False
+
+def choose_size():
+    while True:
+        standard = input("Do you want to play on a standard 7 x 6 board? (y/n) ").lower().strip()
+        if standard not in ['y', 'n', 'yes', 'no']:
+            print("Invalid choice")
+        else:
+            if standard in ['n', 'no']:
+                sizes = input("Please input the desired horizontal and vertical sizes, separated by a space. ").strip().split()
+                if len(sizes) != 2:
+                    print("Invalid choice")
+                    continue
+                else:
+                    horizontal = sizes[0]
+                    vertical = sizes[1]
+                    if horizontal.isdigit() and vertical.isdigit():
+                        return int(horizontal), int(vertical)
+                    else:
+                        print("Invalid choice")
+                        continue
+            return 7, 6
 
 
 def print_rules():
